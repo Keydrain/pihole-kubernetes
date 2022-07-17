@@ -161,6 +161,10 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           securityContext:
             privileged: {{ .Values.privileged }}
+            {{- if .Values.serviceDhcp.enabled }}
+            capabilities:
+              add: [ "NET_ADMIN", "SYS_NICE" ]
+            {{- end }}
           ports:
           - containerPort: {{ .Values.webHttp }}
             name: http
